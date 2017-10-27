@@ -1,5 +1,5 @@
 <template>
-  <div :is="isLi?'li':'div'" v-click-outside="blur" @click="click"
+  <div :is="isLi?'li':'div'" v-click-outside="blur" @click="$emit('click')" @mouseover="$emit('mouseover')" @mouseout="$emit('mouseout')"
     :class="[{open:show,disabled:disabled,dropdown:isLi,'input-group-btn':inInput,'btn-group':!isLi&&!inInput}]"
   >
     <slot name="before"></slot>
@@ -55,20 +55,7 @@ export default {
     blur () { this.show = false },
     toggle () {
       if (!this.disabled) { this.show = !this.show }
-    },
-    click () {
-      this.$emit('click');
     }
-  },
-  created() {
-    document.querySelector('.dropdown-toggle').onmouseenter = e => this.show = true;
-    document.querySelector('.dropdown-toggle').onmouseout = e => this.show = false;
-  },
-  mounted () {
-    $('ul', this.$el).on('click', 'li>a', e => { this.show = false })
-  },
-  beforeDestroy () {
-    $('ul', this.$el).off()
   }
 }
 </script>
