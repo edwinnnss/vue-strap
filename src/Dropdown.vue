@@ -1,5 +1,5 @@
 <template>
-  <div :is="isLi?'li':'div'" v-click-outside="blur" @click="$emit('click')" @mouseover="$emit('mouseover')" @mouseout="$emit('mouseout')" :class="[{open:show,disabled:disabled,dropdown:isLi,'input-group-btn':inInput,'btn-group':!isLi&&!inInput}]">
+  <div :is="isLi?'li':'div'" v-click-outside="blur" @click="click" @mouseover="mouseover" @mouseout="mouseout" :class="[{open:show,disabled:disabled,dropdown:isLi,'input-group-btn':inInput,'btn-group':!isLi&&!inInput}]">
     <slot name="before"></slot>
     <a v-if="isLi" role="button" :class="['dropdown-toggle',buttonSize,{disabled:disabled}]" @keyup.esc="show = false">
       <slot name="button">{{ text }}</slot>
