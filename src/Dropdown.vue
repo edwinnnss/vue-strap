@@ -1,18 +1,20 @@
 <template>
-  <div :is="isLi?'li':'div'" v-click-outside="blur"
+  <div :is="isLi?'li':'div'" v-click-outside="blur" @click="click"
     :class="[{open:show,disabled:disabled,dropdown:isLi,'input-group-btn':inInput,'btn-group':!isLi&&!inInput}]"
   >
     <slot name="before"></slot>
     <a v-if="isLi" role="button" :class="['dropdown-toggle',buttonSize,{disabled:disabled}]"
       @keyup.esc="show = false"
-      @click.prevent="toggle"
+      @mouseover="show = true"
+      @mouseout="show = false"
     >
       <slot name="button">{{ text }}</slot>
       <span class="caret"></span>
     </a>
     <button v-else type="button" :class="['btn btn-' + type,buttonSize,'dropdown-toggle']" :disabled="disabled"
       @keyup.esc="show = false"
-      @click.prevent="toggle"
+      @mouseover="show = true"
+      @mouseout="show = false"
     >
       <slot name="button">{{ text }}</slot>
       <span class="caret"></span>
@@ -57,6 +59,9 @@ export default {
     blur () { this.show = false },
     toggle () {
       if (!this.disabled) { this.show = !this.show }
+    },
+    click () {
+      this.$emit('click');
     }
   },
   mounted () {
