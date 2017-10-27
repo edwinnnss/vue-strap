@@ -5,16 +5,12 @@
     <slot name="before"></slot>
     <a v-if="isLi" role="button" :class="['dropdown-toggle',buttonSize,{disabled:disabled}]"
       @keyup.esc="show = false"
-      @mouseover="show = true"
-      @mouseout="show = false"
     >
       <slot name="button">{{ text }}</slot>
       <span class="caret"></span>
     </a>
     <button v-else type="button" :class="['btn btn-' + type,buttonSize,'dropdown-toggle']" :disabled="disabled"
       @keyup.esc="show = false"
-      @mouseover="show = true"
-      @mouseout="show = false"
     >
       <slot name="button">{{ text }}</slot>
       <span class="caret"></span>
@@ -63,6 +59,10 @@ export default {
     click () {
       this.$emit('click');
     }
+  },
+  created() {
+    document.querySelector('.dropdown-toggle').onmouseenter = e => this.show = true;
+    document.querySelector('.dropdown-toggle').onmouseout = e => this.show = false;
   },
   mounted () {
     $('ul', this.$el).on('click', 'li>a', e => { this.show = false })
